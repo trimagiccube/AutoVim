@@ -1,4 +1,7 @@
 #!/bin/bash
+#author:charley ye
+#date:2016/12/14
+#description:completing vim plugin automatically.
 
 source_dir_doc='./profile/doc/*'
 source_dir_plugin='./profile/plugin/*'

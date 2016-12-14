@@ -1,4 +1,7 @@
 #!/bin/bash
+#author:charley ye
+#date:2016/12/13
+#description:this script aim to find files, which files you can get when you use cscope and ctags.
 
 create_dir()
 {
