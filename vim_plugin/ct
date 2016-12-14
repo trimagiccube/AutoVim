@@ -1,0 +1,221 @@
+#!/bin/bash
+
+create_dir()
+{
+  new_line=0
+  while [ $new_line -lt 4 ]
+  do
+    if [ $new_line -eq 0 ]
+    then
+      echo "#dir" >> dir.tmp
+    elif [ $new_line -eq 1 ]
+    then
+      echo "#not_dir" >> dir.tmp
+    elif [ $new_line -eq 2 ]
+    then
+      echo "#file" >> dir.tmp
+    else
+      echo "#not_file" >> dir.tmp
+    fi
+    new_line=`expr $new_line + 1`
+  done
+}
+
+build_help()
+{
+  echo ""
+  echo "Usage:"
+  echo "  ct [option]"
+  echo ""
+  echo "Commands:"
+  echo "  ct                     filter files and create tags,cscope.out "
+  echo "  ct -c, --create        create dir.tmp"
+  echo "  ct -r, --remmove       remmove all tmp files that 'ct' has created"
+  echo ""
+  echo "  ct -h, --help          display this help of 'ct'"
+  echo ""
+}
+
+if [ $# -eq 0 ]
+then
+  if [ -e dir.tmp ]
+  then
+    sed -n "/#/=" dir.tmp > num.tmp
+    val=`cat dir.tmp | wc -l`
+    begin_num_dir=`sed -n "1p" num.tmp`
+    begin_num_not_dir=`sed -n "2p" num.tmp`
+    begin_num_file=`sed -n "3p" num.tmp`
+    begin_num_not_file=`sed -n "4p" num.tmp`
+    num_dir=`expr $begin_num_dir + 1`
+    num_not_dir=`expr $begin_num_not_dir + 1`
+    num_file=`expr $begin_num_file + 1`
+    num_not_file=`expr $begin_num_not_file + 1`
+    i=$num_dir
+
+    #remove tmp file
+    rm -f num.tmp
+
+    #whther filter.files exit
+    if [ -e filter.files ]
+    then 
+      rm -f filter.files 
+      touch filter.files
+    else
+      touch filter.files
+    fi
+
+    find `pwd` -name "*" -type f -print >> now_filter.files
+	echo "find file >> ./ "
+
+    if [ $num_dir -lt $begin_num_not_dir ] 
+    then
+      line=`sed -n "$i{p}" dir.tmp`
+      ss="-path `pwd`/$line -prune"
+      path=${line%/*}
+      if [ $path = $line ]
+      then
+		path=""
+      fi
+      s_path=$path
+      echo "find file >> $line"
+      i=`expr $i + 1` 
+
+      if [ $i -lt $begin_num_not_dir ]
+      then
+        while [ $i -lt $begin_num_not_dir ]
+        do
+          line=`sed -n "$i{p}" dir.tmp`
+          path=${line%/*}
+          if [ $path = $line ]
+          then
+			path=""
+          fi
+          if [[ -z $path || -z $s_path ]]
+          then
+            if [[ -z $path && -n $s_path ]]
+            then 
+	          echo "find file >> $line"
+              find `pwd`/$s_path $ss -o -name "*" -type f -print >> filter.files
+              ss="-path `pwd`/$line -prune"
+            elif [[ -n $path && -z $s_path ]]
+            then
+	          echo "find file >> $line"
+              find `pwd`/$s_path $ss -o -name "*" -type f -print >> filter.files
+              ss="-path `pwd`/$line -prune"
+			else
+              string=" -o -path `pwd`/$line -prune"
+              ss=$ss$string
+              echo "find file >> $line"
+			fi
+          else
+            if [ $path == $s_path ]
+            then
+              string=" -o -path `pwd`/$line -prune"
+              ss=$ss$string
+              echo "find file >> $line"
+            else
+	          echo "find file >> $line"
+              find `pwd`/$s_path $ss -o -name "*" -type f -print >> filter.files
+              ss="-path `pwd`/$line -prune"
+            fi
+          fi
+          i=`expr $i + 1` 
+          s_path=$path
+        done
+        find `pwd`/$s_path $ss -o -name "*" -type f -print >> filter.files
+      else
+        find `pwd`/$s_path $ss -o -name "*" -type f -print >> filter.files
+      fi
+    fi
+
+    while [ $num_not_dir -lt $begin_num_file ]
+    do
+      dir=`sed -n "$num_not_dir{p}" dir.tmp`
+      num_not_dir=`expr $num_not_dir + 1` 
+	  find `pwd`/$dir -name "*" -type f -print >> filter.files
+	  echo "find file except >> $dir"
+    done
+
+    grep -v -f filter.files now_filter.files > dir.files
+    mv dir.files filter.files
+    sed -i '/now_filter\.files/d' filter.files
+    rm -f now_filter.files
+
+    if [ $num_file -lt $begin_num_not_file ]  
+    then
+      if [ -n now.files ]
+	  then 
+ 	    rm -f now.files 
+      else
+  	    touch now.files
+	  fi
+
+      while [ $num_file -lt $begin_num_not_file ]  
+      do
+        file_type=`sed -n "$num_file{p}" dir.tmp`
+        num_file=`expr $num_file + 1` 
+        grep "$file_type$" filter.files >> now.files 
+        echo "find file >> *$file_type"
+      done
+      rm -f filter.files
+      mv now.files filter.files
+    fi
+     
+    while [ $num_not_file -le $val ]
+    do
+      file_type=`sed -n "$num_not_file{p}" dir.tmp`
+      num_not_file=`expr $num_not_file + 1` 
+      sed -i "/$file_type$/d" filter.files 
+      echo "find file except >> *$file_type"
+    done
+
+    #filter the same name file
+    sort -k2n filter.files | uniq > now.files 
+    rm -f filter.files
+    mv now.files filter.files
+
+    #generate tag file for lookupfile plugin
+  #  echo -e "!_TAG_FILE_SORTED\t2\t/2=foldcase/" > filenametags
+  #  find . -not -regex '.*\.\(png\|gif\)' -type f -printf "%f\t%p\t1\n" | \
+  #  sort -f >> filenametags
+
+    #create cscope.* file 
+    cscope -bk -i filter.files 
+
+    #create tags file 
+    file_tags=`cat filter.files | xargs echo`
+    ctags $file_tags 
+ else
+#    create_dir
+    echo "Error :can't find  dir.tmp."
+    echo "Try 'ct --help' for more information."
+#    echo "Create dir.tmp automatically."
+  fi
+else
+  option=$1
+  set -- `getopt -o crh --long creat,remmove,help -- "$@"`
+  while [ -n "$1" ]
+  do
+    case $1 in 
+    -c|--create) if [ -e dir.tmp ]
+                 then
+                   echo "Warning :dir.tmp is alreadly exit." 
+                 else
+                   create_dir
+                 fi
+                 break;;
+
+    -r|--remmove) rm -f cscope* tags filter.files dir.tmp filenametags
+#                 echo "Warning:you have cleaned all tmp files" 
+   	              break;;
+
+    -h|--help) build_help
+        break;;
+
+    *) echo "$option :invalid option."
+       echo "Try 'ct --help' for more information."
+       break;;
+    esac
+    shift
+  done
+fi
