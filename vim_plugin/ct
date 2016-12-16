@@ -186,8 +186,7 @@ then
     cscope -bk -i filter.files 
 
     #create tags file 
-    file_tags=`cat filter.files | xargs echo`
-    ctags $file_tags 
+    ctags -L filter.files 
  else
 #    create_dir
     echo "Error :can't find  dir.tmp."
