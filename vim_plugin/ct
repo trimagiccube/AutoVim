@@ -1,7 +1,7 @@
 #!/bin/bash
 #author:charley ye
 #date:2016/12/13
-#description:this script aim to find files, which files you can get when you use cscope and ctags.
+#description:this script aim to filter files which you can get when you use cscope and ctags.
 
 create_dir()
 {
@@ -10,15 +10,15 @@ create_dir()
   do
     if [ $new_line -eq 0 ]
     then
-      echo "#dir" >> dir.tmp
+      echo "#dir" >> files.conf
     elif [ $new_line -eq 1 ]
     then
-      echo "#not_dir" >> dir.tmp
+      echo "#not_dir" >> files.conf
     elif [ $new_line -eq 2 ]
     then
-      echo "#file" >> dir.tmp
+      echo "#file" >> files.conf
     else
-      echo "#not_file" >> dir.tmp
+      echo "#not_file" >> files.conf
     fi
     new_line=`expr $new_line + 1`
   done
@@ -32,7 +32,7 @@ build_help()
   echo ""
   echo "Commands:"
   echo "  ct                     filter files and create tags,cscope.out "
-  echo "  ct -c, --create        create dir.tmp"
+  echo "  ct -c, --create        create files.conf"
   echo "  ct -r, --remmove       remmove all tmp files that 'ct' has created"
   echo ""
   echo "  ct -h, --help          display this help of 'ct'"
@@ -41,10 +41,10 @@ build_help()
 
 if [ $# -eq 0 ]
 then
-  if [ -e dir.tmp ]
+  if [ -e files.conf ]
   then
-    sed -n "/#/=" dir.tmp > num.tmp
-    val=`cat dir.tmp | wc -l`
+    sed -n "/#/=" files.conf > num.tmp
+    val=`cat files.conf | wc -l`
     begin_num_dir=`sed -n "1p" num.tmp`
     begin_num_not_dir=`sed -n "2p" num.tmp`
     begin_num_file=`sed -n "3p" num.tmp`
@@ -72,7 +72,7 @@ then
 
     if [ $num_dir -lt $begin_num_not_dir ] 
     then
-      line=`sed -n "$i{p}" dir.tmp`
+      line=`sed -n "$i{p}" files.conf`
       ss="-path `pwd`/$line -prune"
       path=${line%/*}
       if [ $path = $line ]
@@ -87,7 +87,7 @@ then
       then
         while [ $i -lt $begin_num_not_dir ]
         do
-          line=`sed -n "$i{p}" dir.tmp`
+          line=`sed -n "$i{p}" files.conf`
           path=${line%/*}
           if [ $path = $line ]
           then
@@ -133,7 +133,7 @@ then
 
     while [ $num_not_dir -lt $begin_num_file ]
     do
-      dir=`sed -n "$num_not_dir{p}" dir.tmp`
+      dir=`sed -n "$num_not_dir{p}" files.conf`
       num_not_dir=`expr $num_not_dir + 1` 
 	  find `pwd`/$dir -name "*" -type f -print >> filter.files
 	  echo "find file except >> $dir"
@@ -155,7 +155,7 @@ then
 
       while [ $num_file -lt $begin_num_not_file ]  
       do
-        file_type=`sed -n "$num_file{p}" dir.tmp`
+        file_type=`sed -n "$num_file{p}" files.conf`
         num_file=`expr $num_file + 1` 
         grep "$file_type$" filter.files >> now.files 
         echo "find file >> *$file_type"
@@ -166,7 +166,7 @@ then
      
     while [ $num_not_file -le $val ]
     do
-      file_type=`sed -n "$num_not_file{p}" dir.tmp`
+      file_type=`sed -n "$num_not_file{p}" files.conf`
       num_not_file=`expr $num_not_file + 1` 
       sed -i "/$file_type$/d" filter.files 
       echo "find file except >> *$file_type"
@@ -189,9 +189,9 @@ then
     ctags -L filter.files 
  else
 #    create_dir
-    echo "Error :can't find  dir.tmp."
+    echo "Error :can't find  files.conf."
     echo "Try 'ct --help' for more information."
-#    echo "Create dir.tmp automatically."
+#    echo "Create files.conf automatically."
   fi
 else
   option=$1
@@ -199,15 +199,15 @@ else
   while [ -n "$1" ]
   do
     case $1 in 
-    -c|--create) if [ -e dir.tmp ]
+    -c|--create) if [ -e files.conf ]
                  then
-                   echo "Warning :dir.tmp is alreadly exit." 
+                   echo "Warning :files.conf is alreadly exit." 
                  else
                    create_dir
                  fi
                  break;;
 
-    -r|--remmove) rm -f cscope* tags filter.files dir.tmp filenametags
+    -r|--remmove) rm -f cscope* tags filter.files files.conf filenametags
 #                 echo "Warning:you have cleaned all tmp files" 
    	              break;;
 
