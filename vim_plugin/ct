@@ -187,11 +187,9 @@ then
 
     #create tags file 
     ctags -L filter.files 
- else
-#    create_dir
+  else
     echo "Error :can't find  files.conf."
     echo "Try 'ct --help' for more information."
-#    echo "Create files.conf automatically."
   fi
 else
   option=$1
