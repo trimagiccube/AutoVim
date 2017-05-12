@@ -5,9 +5,29 @@ set nu  "display the number of every line
 set ruler   " show the cursor position all the time
 set tabstop=4
 set hlsearch
-set ignorecase
-map bn :bn<CR>
-map bp :bp<CR>
+set noignorecase
+"show pwd
+noremap <C-p> :pwd<CR>
+
+"""""""""""""""""""""""""""
+"BufExplorer
+"""""""""""""""""""""""""""
+map bo :BufExplorer<CR>
+map bt :ToggleBufExplorer<CR>
+map bs :BufExplorerHorizontalSplit<CR>
+map bv :BufExplorerVerticalSplit<CR>
+"let g:bufExplorerSplitRight=1
+"switch buffer
+nmap bn :bn<CR>	
+nmap bp :bp<CR>
+
+"""""""""""""""""""""""""""
+"NERDTree
+"""""""""""""""""""""""""""
+noremap to :NERDTree<CR>
+noremap tq :NERDTreeClose<CR>
+noremap tp :NERDTreeFind<CR>
+"noremap tt :NERDTreeToggle<CR>
 
 """""""""""""""""""""""""""
 "languge
@@ -55,25 +75,20 @@ endfun
 """""""""""""""""""""""""""
 "winwanager
 """""""""""""""""""""""""""
-let g:winManagerWindowLayout='FileExplorer' 
+let g:winManagerWindowLayout='BufExplorer' 
 nmap wm :WMToggle<cr>
 
 """""""""""""""""""""""""""
 "minibuf
 """""""""""""""""""""""""""
 "let g:miniBufExplMapWindowsNavVim=1 
-let g:miniBufExplMapWindowNavVim = 1 
-let g:miniBufExplMapWindowNavArrows = 1 
-let g:miniBufExplMapCTabSwitchBufs = 1 
-let g:miniBufExplModSelTarget = 1 
-let g:bufExplorerMaxHeight=30
-let g:miniBufExplorerMoreThanOne=0
 
-"""""""""""""""""""""""""""
-"minibuf
-"""""""""""""""""""""""""""
-nnoremap <silent> <F3> :Grep<CR>
-
+"let g:miniBufExplMapWindowNavVim = 1 
+"let g:miniBufExplMapWindowNavArrows = 1 
+"let g:miniBufExplMapCTabSwitchBufs = 1 
+"let g:miniBufExplModSelTarget = 1 
+"let g:bufExplorerMaxHeight=30
+"let g:miniBufExplorerMoreThanOne=0
 
 """""""""""""""""""""""""""
 "grep
