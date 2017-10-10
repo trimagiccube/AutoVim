@@ -1,5 +1,5 @@
 """""""""""""""""""""""""""
-"nomal setting
+"Base setup
 """""""""""""""""""""""""""
 set nu  "display the number of every line
 set ruler   " show the cursor position all the time
@@ -8,6 +8,8 @@ set hlsearch
 set noignorecase
 "show pwd
 noremap <C-p> :pwd<CR>
+"highlight WhitespaceEOL ctermbg=red guibg=red
+"match WhitespaceEOL /s\s\+$/
 
 """""""""""""""""""""""""""
 "BufExplorer
@@ -18,7 +20,7 @@ map bs :BufExplorerHorizontalSplit<CR>
 map bv :BufExplorerVerticalSplit<CR>
 "let g:bufExplorerSplitRight=1
 "switch buffer
-nmap bn :bn<CR>	
+nmap bn :bn<CR>
 nmap bp :bp<CR>
 
 """""""""""""""""""""""""""
@@ -32,30 +34,30 @@ noremap tp :NERDTreeFind<CR>
 """""""""""""""""""""""""""
 "languge
 """""""""""""""""""""""""""
-if has("multi_byte") 
-    set encoding=utf-8 
-    set termencoding=utf-8 
-    set formatoptions+=mM 
-    set fencs=utf-8,gbk 
-    if v:lang =~? '^/(zh/)/|/(ja/)/|/(ko/)' 
-        set ambiwidth=double 
-    endif 
-    if has("win32") 
-        source $VIMRUNTIME/delmenu.vim 
-        source $VIMRUNTIME/menu.vim 
-        language messages zh_CN.utf-8 
-    endif 
-else 
-    echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte" 
-endif  " UTF-8 
+if has("multi_byte")
+    set encoding=utf-8
+    set termencoding=utf-8
+    set formatoptions+=mM
+    set fencs=utf-8,gbk
+    if v:lang =~? '^/(zh/)/|/(ja/)/|/(ko/)'
+        set ambiwidth=double
+    endif
+    if has("win32")
+        source $VIMRUNTIME/delmenu.vim
+        source $VIMRUNTIME/menu.vim
+        language messages zh_CN.utf-8
+    endif
+else
+    echoerr "Sorry, this version of (g)vim was not compiled with +multi_byte"
+endif  " UTF-8
 
 """"""""""""""""""""""""""""""
 " Ctags setting
 """"""""""""""""""""""""""""""
-set tags=tags; 
+set tags=tags;
 set autochdir
 "auto creat tags
-"map <F4> :call Ctags()<CR>	
+"map <F4> :call Ctags()<CR>
 "func! Ctags()
 "exec "w"
 "exec "!ctags -R ."
@@ -64,7 +66,7 @@ set autochdir
 """"""""""""""""""""""""""""""
 " Tlist setting
 """"""""""""""""""""""""""""""
-let Tlist_Show_One_File=1 
+let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 "map <F2> :call Tlist()<CR>
 map tl :call Tlist()<CR>
@@ -75,20 +77,8 @@ endfun
 """""""""""""""""""""""""""
 "winwanager
 """""""""""""""""""""""""""
-let g:winManagerWindowLayout='BufExplorer' 
-nmap wm :WMToggle<cr>
-
-"""""""""""""""""""""""""""
-"minibuf
-"""""""""""""""""""""""""""
-"let g:miniBufExplMapWindowsNavVim=1 
-
-"let g:miniBufExplMapWindowNavVim = 1 
-"let g:miniBufExplMapWindowNavArrows = 1 
-"let g:miniBufExplMapCTabSwitchBufs = 1 
-"let g:miniBufExplModSelTarget = 1 
-"let g:bufExplorerMaxHeight=30
-"let g:miniBufExplorerMoreThanOne=0
+"let g:winManagerWindowLayout='BufExplorer'
+"nmap wm :WMToggle<cr>
 
 """""""""""""""""""""""""""
 "grep
