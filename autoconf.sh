@@ -37,18 +37,21 @@ then
       echo -e '\033[31m  No cscope installed...\033[0m'
       echo -e '\033[31m  Please install it firstly...\033[0m'
       echo -e '\033[31m  ...\033[0m'
+      exit
     fi
   else
     echo -e '\033[31mERROR:\033[0m'
     echo -e '\033[31m  No ctags installed...\033[0m'
     echo -e '\033[31m  Please install it firstly...\033[0m'
     echo -e '\033[31m  ...\033[0m'
+    exit
   fi
 else
   echo -e '\033[31mERROR:\033[0m'
   echo -e '\033[31m  No vim installed...\033[0m'
   echo -e '\033[31m  Please install it firstly...\033[0m'
   echo -e '\033[31m  ...\033[0m'
+  exit
 fi
 
 echo -e '\033[32mINFO:\033[0m'
