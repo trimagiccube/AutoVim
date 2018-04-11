@@ -42,3 +42,4 @@
   "F12": jump to current file's include file
   "*": vsearch next position
   "#": vsearch previous position
+  "so": source explor
