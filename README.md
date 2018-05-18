@@ -1,15 +1,26 @@
 autovim
 =======
 
-Platform      |
-------------- |
-Linux(Ubuntu) |
- 
+ Platform      | Build Status
+ ------------- | ------------
+ Linux(Ubuntu) |
+
 autovim is a tool that making vim likes source insgiht.
 
-## How to build
+## Pre build
 ```
-sudo ./autoconf.sh
+# install vim cscope ctags
+```
+
+## How to build
+- Install autovim
+```
+./install.sh
+```
+
+- Check installation status
+```
+which ct
 ```
 
 ## How to use
@@ -18,7 +29,7 @@ sudo ./autoconf.sh
 ct -c
 ```
 
-- Open files.conf and add file types
+- Open files.conf and add file types, example following,
 ```
 #DIR
 #!DIR

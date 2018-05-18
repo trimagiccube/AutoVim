@@ -11,15 +11,15 @@ create_dir()
   do
     if [ $new_line -eq 0 ]
     then
-      echo "#dir" >> files.conf
+      echo "#DIRS" >> files.conf
     elif [ $new_line -eq 1 ]
     then
-      echo "#not_dir" >> files.conf
+      echo "#!DIRS" >> files.conf
     elif [ $new_line -eq 2 ]
     then
-      echo "#file" >> files.conf
+      echo "#FILE" >> files.conf
     else
-      echo "#not_file" >> files.conf
+      echo "#!FILE" >> files.conf
     fi
     new_line=`expr $new_line + 1`
   done
