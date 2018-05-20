@@ -5,9 +5,23 @@ autovim
  ------------- | ------------
  Linux(Ubuntu) |
 
-autovim is a tool that making vim likes source insgiht.
+autovim is a tool that making vim works as source insight.
 
-## Pre build
+## Features
+* nerdtree
+* taglist
+* cscope
+* srcexpl
+* bufexplorer
+* grep 
+* lookupfile
+* vsearch
+* trail whitespace
+* c/h switch
+* filter dirs/files
+* sychronaize files
+
+## Pre-build
 ```
 # install vim cscope ctags
 ```
@@ -43,6 +57,7 @@ ct -c
 ```
 ct
 ```
+  so, it will only filter and sychronizie all *.h/*.c files.
 
 ## Quick commands
 * `ctl+]` jump function definition
