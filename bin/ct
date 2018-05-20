@@ -1,8 +1,6 @@
 #!/bin/bash
 
-#Author:Chenglin.Ye
-#Date:2016/12/13
-#Description:this script aim to filter files which you can get when you use cscope and ctags.
+# Copyright (c) 2018 Ye Chenglin <yechnlin@gmail.com>
 
 create_dir()
 {

@@ -13,23 +13,23 @@ autovim is a tool that making vim likes source insgiht.
 ```
 
 ## How to build
-- Install autovim
+* Install autovim
 ```
 ./install.sh
 ```
 
-- Check installation status
+* Check installation status
 ```
 which ct
 ```
 
 ## How to use
-- Create files.conf
+* Create files.conf
 ```
 ct -c
 ```
 
-- Open files.conf and add file types, example following,
+* Open files.conf and add file types, example following,
 ```
 #DIR
 #!DIR
@@ -39,7 +39,7 @@ ct -c
 #!FILE
 ```
 
-- Synchronize files.
+* Synchronize files.
 ```
 ct
 ```

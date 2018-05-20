@@ -1,25 +1,20 @@
 #!/bin/bash
 
-#Author:Chenglin.Ye
-#Date:2016/12/14
-#Description:auto configurate vim plugin.
+# Copyright (c) 2018 Ye Chenglin <yechnlin@gmail.com>
 
-SOURCE_PROFILE_PATH='plugins/*'
-SOURCE_FILE_VIMRC='conf/vimrc'
-SOURCE_BIN_CT="bin/ct"
+SOURCE_PLUGINS="plugins"
+SOURCE_CONFIG="conf"
+SOURCE_BIN="bin"
 
-SOURCE_SYNTAX_HIGHFUNC='./syntax/highfunc.vim'
-
-TARGET_PROFILE_PATH='/usr/share/vim/vim74'
-TARGET_FILE_VIMRC='/etc/vim/vimrc'
-TARGET_BIN_PATH="/usr/local/bin/"
-
-TARGET_C_FILE='/usr/share/vim/vim74/syntax/c.vim'
-TARGET_CPP_FILE='/usr/share/vim/vim74/syntax/cpp.vim'
+TARGET_VIM=".vim"
+TARGET_BIN="/usr/local/bin"
 
 BIN_VIM="/usr/bin/vim"
 BIN_CTAGS="/usr/bin/ctags"
 BIN_CSCOPE="/usr/bin/cscope"
+
+LOCAL_PATH=`pwd`
+USER_NAME=`whoami`
 
 set -e
 
@@ -38,12 +33,20 @@ if [ ! -e $BIN_CSCOPE ]; then
     sudo apt-get install -y cscope
 fi
 
-cp -r $SOURCE_PROFILE_PATH $TARGET_PROFILE_PATH
-cp $SOURCE_BIN_CT $TARGET_BIN_PATH
-cat $SOURCE_FILE_VIMRC | tee -a $TARGET_FILE_VIMRC > /dev/NULL
-cat $SOURCE_SYNTAX_HIGHFUNC | tee -a $TARGET_C_FILE > /dev/NULL
-cat $SOURCE_SYNTAX_HIGHFUNC | tee -a $TARGET_CPP_FILE > /dev/NULL
+cd /home/$USER_NAME
+
+function install_vim() {
+    cp -r $LOCAL_PATH/$SOURCE_PLUGINS/* $TARGET_VIM
+    cp -r $LOCAL_PATH/$SOURCE_CONFIG/* $TARGET_VIM
+    sudo cp $LOCAL_PATH/$SOURCE_BIN/* $TARGET_BIN
+}
+
+if [ ! -d "$TARGET_VIM" ]; then
+    mkdir -p $TARGET_PATH
+    install_vim
+else
+    install_vim
+fi
 
 echo -e '\033[32mINFO:\033[0m'
-echo -e '\033[32m  Install completely.\033[0m'
-echo -e '\033[32m  ...\033[0m'
+echo -e '\033[32m  Install successfully...\033[0m'
