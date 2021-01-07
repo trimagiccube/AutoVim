@@ -1,81 +1,63 @@
-autovim
-=======
+# AutoVim
 
- Platform      | Build Status
- ------------- | ------------
- Linux(Ubuntu) |
+![logo](./images/logo.png)
 
-autovim is a tool that making vim works as source insight.
+**AutoVim** is a tool helps to configure **vim** automatically.
 
-## Features
-* nerdtree
-* taglist
-* cscope
-* srcexpl
-* bufexplorer
-* grep 
-* lookupfile
-* vsearch
-* trail whitespace
-* c/h switch
-* filter dirs/files
-* sychronaize files
+## Getting start
 
-## Pre-build
 ```
-# install vim cscope ctags
+bash <(curl -s -L https://raw.githubusercontent.com/yechenglin-dev/autovim/master/install.sh)
 ```
 
-## How to build
-* Install autovim
-```
-./install.sh
-```
+**NOTE:** it can be supported on **Ubuntu** only.
 
-* Check installation status
-```
-which ct
-```
+## Plugins
 
-## How to use
-* Create files.conf
-```
-ct -c
-```
+Following plugins can be configured by default,
 
-* Open files.conf and add file types, example following,
-```
-#DIR
-#!DIR
-#FILE
-.h
-.c
-#!FILE
-```
+* [vim-plug](https://github.com/junegunn/vim-plug.git)
+* [NERDTree](https://github.com/scrooloose/nerdtree.git)
+* [BufExplorer](https://github.com/jlanzarotta/bufexplorer.git)
+* [TagList](https://github.com/vim-scripts/taglist.vim.git)
+* [Better whitespace](https://github.com/ntpeters/vim-better-whitespace.git)
+* [VSearch](https://github.com/vim-scripts/vsearch.vim.git)
 
-* Synchronize files.
-```
-ct
-```
-  so, it will only filter and sychronizie all *.h/*.c files.
+## Shortcuts
 
-## Quick commands
-* `ctl+]` jump function definition
-* `ctl+t` comeback previous position
-* `tl` function list
-* `\+g` jump position of function definition
-* `\+c` jump position which the function called
-* `\+s` all position of the function
-* `wm` window manager
-* `bn` next buff
-* `bp` previous buff
-* `bo` buffer open
-* `to` open files tree
-* `tq` close files tree
-* `tp` open files tree and show cursor in current file
-* `F5` lookup files from current project
-* `F3` grep string from current project
-* `F12` jump to current file's include file
-* `*` vsearch next position
-* `#` vsearch previous position
-* `so` source explor
+- **NERDTree**
+
+    | Command | Description |
+    |:-------:|-------------|
+    | to | tree open, enter the directory tree |
+    | tq | tree quit, exit the directory tree |
+    | tp | tree pwd, jump to the current file path in directory tree |
+
+- **BufExplorer**
+
+    | Command | Description |
+    |:-------:|-------------|
+    | bo | buffer open |
+    | bh | buffer force horizontal split open |
+    | bv | buffer force vertical split open |
+    | bp | buffer previous, jump to previous buffer |
+    | bn | buffer next, jump to next buffer |
+
+- **TagList**
+
+    | Command | Description |
+    |:-------:|-------------|
+    | tl | tag list open |
+
+- **Better whitespace**
+
+    | Command | Description |
+    |:-------:|-------------|
+    | wt | whitespace toggle |
+    | wr | whitespace remove |
+
+- **VSearch**
+
+    | Command | Description |
+    |:-------:|-------------|
+    | * | search the selected text, user can select a block text by `v` or `Ctrl+v`  command |
