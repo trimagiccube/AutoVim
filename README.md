@@ -10,7 +10,7 @@
 bash <(curl -s -L https://raw.githubusercontent.com/yechenglin-dev/autovim/master/install.sh)
 ```
 
-**NOTE:** it can be supported on **Ubuntu** only.
+**NOTE:** it can be supported on **Ubuntu** and **MacOS**.
 
 ## Plugins
 

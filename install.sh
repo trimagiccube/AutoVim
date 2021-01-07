@@ -4,11 +4,11 @@ CONFIG="$HOME/.vim/vimrc"
 PLUGDIR="$HOME/.vim/plugged"
 
 GREEN=$'\e[0;32m'
+RED=$'\e[0;31m'
 NC=$'\e[0m'
 
 declare -a DEPENDENCIES=("curl"
 			 "ctags"
-			 "cscope"
 			)
 
 declare -a PLUGSRC=("https://github.com/scrooloose/nerdtree.git"
@@ -18,21 +18,34 @@ declare -a PLUGSRC=("https://github.com/scrooloose/nerdtree.git"
 		    "https://github.com/vim-scripts/vsearch.vim.git"
 		   )
 
+function returnCheck() {
+	if [ x$? != x0 ]; then
+		echo "[${RED}ERROR${NC}] exit"
+		exit
+	fi
+}
+
 echo "[${GREEN}INFO${NC}] start"
 
 for dep in ${DEPENDENCIES[@]}
 do
 	which $dep &>/dev/null
-	if [ x$? == x1 ]
-	then
-		echo "[${GREEN}INFO${NC}] install $dep"
-		sudo apt-get install -y $dep &>/dev/null
+	if [ x$? != x0 ]; then
+		echo "[${GREEN}INFO${NC}] install '$dep'"
+
+		if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+			sudo apt-get install -y $dep
+		elif [[ "$OSTYPE" == "darwin"* ]]; then
+			sudo brew install -y $dep
+		fi
+		returnCheck
 	fi
 done
 
 echo "[${GREEN}INFO${NC}] download 'vim-plug'"
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+returnCheck
 
 mkdir -p $PLUGDIR
 pushd $PLUGDIR &>/dev/null
@@ -41,6 +54,8 @@ for plug in ${PLUGSRC[@]}
 do
 	echo "[${GREEN}INFO${NC}] clone '$plug'"
 	git clone $plug
+	returnCheck
+
 	PLUGS=$(cat <<-END
 		$PLUGS
 		Plug '$plug'
