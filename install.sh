@@ -16,6 +16,7 @@ declare -a PLUGSRC=("https://github.com/scrooloose/nerdtree.git"
 		    "https://github.com/vim-scripts/taglist.vim.git"
 		    "https://github.com/ntpeters/vim-better-whitespace.git"
 		    "https://github.com/vim-scripts/vsearch.vim.git"
+		    "https://github.com/zxqfl/tabnine-vim.git"
 		   )
 
 function returnCheck() {
@@ -134,6 +135,12 @@ vnoremap <silent> * :<C-U>
   \gvy/<C-R><C-R>=substitute(
   \escape(@", '/\.*$^~['), '\_s\+', '\\_s\\+', 'g')<CR><CR>
   \gV:call setreg('"', old_reg, old_regtype)<CR>
+EOF
+
+cat <<EOF >> $CONFIG
+$NULLLINE
+"TabNine"
+set rtp+=~/tabnine-vim
 EOF
 
 cat <<EOF >> $CONFIG

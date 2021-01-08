@@ -22,6 +22,7 @@ Following plugins can be configured by default,
 * [TagList](https://github.com/vim-scripts/taglist.vim.git)
 * [Better whitespace](https://github.com/ntpeters/vim-better-whitespace.git)
 * [VSearch](https://github.com/vim-scripts/vsearch.vim.git)
+* [TabNine](https://github.com/zxqfl/tabnine-vim.git)
 
 ## Shortcuts
 
