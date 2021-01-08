@@ -9,6 +9,7 @@ NC=$'\e[0m'
 
 declare -a DEPENDENCIES=("curl"
 			 "ctags"
+			 "ack"
 			)
 
 declare -a PLUGSRC=("https://github.com/scrooloose/nerdtree.git"
@@ -17,6 +18,7 @@ declare -a PLUGSRC=("https://github.com/scrooloose/nerdtree.git"
 		    "https://github.com/ntpeters/vim-better-whitespace.git"
 		    "https://github.com/vim-scripts/vsearch.vim.git"
 		    "https://github.com/zxqfl/tabnine-vim.git"
+		    "https://github.com/mileszs/ack.vim.git"
 		   )
 
 function returnCheck() {
@@ -141,6 +143,15 @@ cat <<EOF >> $CONFIG
 $NULLLINE
 "TabNine"
 set rtp+=~/tabnine-vim
+EOF
+
+cat <<EOF >> $CONFIG
+$NULLLINE
+"Ack"
+cnoreabbrev Ack Ack!
+nnoremap <Leader>a :Ack!<Space>
+cnoreabbrev AckFile AckFile!
+nnoremap <Leader>a :AckFile!<Space>
 EOF
 
 cat <<EOF >> $CONFIG
