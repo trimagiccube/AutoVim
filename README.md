@@ -30,6 +30,7 @@ Following plugins can be configured by default,
 - Switch windows
 
     | Command | Description |
+    |:-------:|-------------|
     | `Ctrl`+`w`+`j/k/h/l` | switch window to `up/down/left/right` |
 
 - **NERDTree**
