@@ -4,6 +4,8 @@
 
 **AutoVim** is a tool helps to configure **vim** automatically.
 
+[![Build Status](https://travis-ci.org/yechenglin-dev/AutoVim.svg?branch=master)](https://travis-ci.org/yechenglin-dev/AutoVim)
+
 ## Getting start
 
 ```
