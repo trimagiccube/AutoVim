@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - '12'
+
+before_install:
+  - npm install
+
+script:
+  - bash <(curl -s -L https://raw.githubusercontent.com/yechenglin-dev/autovim/master/install.sh)
