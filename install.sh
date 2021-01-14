@@ -81,6 +81,7 @@ EOF
 cat <<EOF >> $CONFIG
 $NULLLINE
 "Common"
+set encoding=utf-8
 set nu
 set ruler
 set hlsearch
