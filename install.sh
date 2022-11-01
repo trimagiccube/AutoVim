@@ -17,9 +17,9 @@ declare -a PLUGSRC=("https://github.com/scrooloose/nerdtree.git"
 		    "https://github.com/vim-scripts/taglist.vim.git"
 		    "https://github.com/ntpeters/vim-better-whitespace.git"
 		    "https://github.com/vim-scripts/vsearch.vim.git"
-		    "https://github.com/zxqfl/tabnine-vim.git"
 		    "https://github.com/mileszs/ack.vim.git"
-		   )
+		    "https://github.com/frazrepo/vim-rainbow"
+		    )
 
 function returnCheck() {
 	if [ x$? != x0 ]; then
@@ -87,6 +87,8 @@ set ruler
 set hlsearch
 set noignorecase
 set incsearch
+set cursorline
+set cursorcolumn
 syntax on
 EOF
 
@@ -142,12 +144,6 @@ EOF
 
 cat <<EOF >> $CONFIG
 $NULLLINE
-"TabNine"
-set rtp+=~/tabnine-vim
-EOF
-
-cat <<EOF >> $CONFIG
-$NULLLINE
 "Ack"
 cnoreabbrev Ack Ack!
 nnoremap <Leader>a :Ack!<Space>
@@ -163,4 +159,9 @@ syn match cFunctions "\<[a-zA-Z_][a-zA-Z_0-9]*\>\s*("me=e-1
 hi cFunctions gui=NONE cterm=bold  ctermfg=blue
 EOF
 
+cat <<EOF >> $CONFIG
+$NULLLINE
+"rainbow"
+let g:rainbow_active = 1
+EOF
 echo "[${GREEN}INFO${NC}] end"
