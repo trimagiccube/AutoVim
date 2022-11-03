@@ -2,6 +2,7 @@
 
 CONFIG="$HOME/.vim/vimrc"
 PLUGDIR="$HOME/.vim/plugged"
+COLORS="$HOME/.vim/colors"
 
 GREEN=$'\e[0;32m'
 RED=$'\e[0;31m'
@@ -10,6 +11,7 @@ NC=$'\e[0m'
 declare -a DEPENDENCIES=("curl"
 			 "ctags"
 			 "ack"
+			 "cscope"
 			)
 
 declare -a PLUGSRC=("https://github.com/scrooloose/nerdtree.git"
@@ -50,6 +52,9 @@ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
     https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 returnCheck
 
+mkdir -p $COLORS
+cp colors/molokai.vim $COLORS
+
 mkdir -p $PLUGDIR
 pushd $PLUGDIR &>/dev/null
 
@@ -89,6 +94,7 @@ set noignorecase
 set incsearch
 set cursorline
 set cursorcolumn
+colorscheme molokai
 syntax on
 EOF
 
@@ -163,5 +169,30 @@ cat <<EOF >> $CONFIG
 $NULLLINE
 "rainbow"
 let g:rainbow_active = 1
+EOF
+
+cat <<EOF >> $CONFIG
+$NULLLINE
+"cscope"
+if has("cscope")
+  set csprg=/usr/bin/cscope
+  set csto=1
+  set cst
+  set nocsverb
+  " add any database in current directory
+  if filereadable("cscope.out")
+      cs add cscope.out
+  endif
+  set csverb
+nmap <C-\>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+nmap <C-\>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+nmap <C-\>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+nmap <C-\>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+endif
+
 EOF
 echo "[${GREEN}INFO${NC}] end"
