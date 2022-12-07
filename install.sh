@@ -88,12 +88,22 @@ $NULLLINE
 "Common"
 set encoding=utf-8
 set nu
+"display column and line at vim bottom"
 set ruler
+"highlight when search"
 set hlsearch
+"case sensetive, when search word,only show word, WORD,woRD not"
 set noignorecase
 set incsearch
 set cursorline
 set cursorcolumn
+set tabstop=4
+set sw=4
+set cindent
+map <c-h> <c-w>h
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
 colorscheme molokai
 syntax on
 EOF
