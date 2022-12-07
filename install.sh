@@ -3,6 +3,7 @@
 CONFIG="$HOME/.vim/vimrc"
 PLUGDIR="$HOME/.vim/plugged"
 COLORS="$HOME/.vim/colors"
+SWAPFILE="$HOME/.vim/swapfiles"
 
 GREEN=$'\e[0;32m'
 RED=$'\e[0;31m'
@@ -55,6 +56,11 @@ returnCheck
 mkdir -p $COLORS
 cp colors/molokai.vim $COLORS
 
+mkdir -p $SWAPFILE
+
+mkdir -p $PLUGDIR
+pushd $PLUGDIR &>/dev/null
+
 mkdir -p $PLUGDIR
 pushd $PLUGDIR &>/dev/null
 
@@ -100,6 +106,7 @@ set cursorcolumn
 set tabstop=4
 set sw=4
 set cindent
+set directory=$SWAPFILE
 map <c-h> <c-w>h
 map <c-j> <c-w>j
 map <c-k> <c-w>k
