@@ -173,6 +173,7 @@ nnoremap <Leader>a :Ack!<Space>
 cnoreabbrev AckFile AckFile!
 nnoremap <Leader>a :AckFile!<Space>
 map <F5> :!cscope -Rbq<CR>:cs reset<CR><CR>
+map <F4> :make clean;make -j32 VGPU_ENABLE=1<CR>
 EOF
 
 cat <<EOF >> $CONFIG
