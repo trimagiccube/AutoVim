@@ -21,7 +21,7 @@ declare -a PLUGSRC=("https://github.com/scrooloose/nerdtree.git"
 		    "https://github.com/ntpeters/vim-better-whitespace.git"
 		    "https://github.com/vim-scripts/vsearch.vim.git"
 		    "https://github.com/mileszs/ack.vim.git"
-		    "https://github.com/frazrepo/vim-rainbow"
+			"https://github.com/tpope/vim-fugitive"
 		    )
 
 function returnCheck() {
