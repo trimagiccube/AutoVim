@@ -22,6 +22,7 @@ declare -a PLUGSRC=("https://github.com/scrooloose/nerdtree.git"
 		    "https://github.com/vim-scripts/vsearch.vim.git"
 		    "https://github.com/mileszs/ack.vim.git"
 			"https://github.com/tpope/vim-fugitive"
+			"https://github.com/pidb/glow.vim"
 		    )
 
 function returnCheck() {
@@ -112,6 +113,8 @@ map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 colorscheme molokai
+set list
+set listchars=tab:>-,trail:-
 syntax on
 EOF
 
